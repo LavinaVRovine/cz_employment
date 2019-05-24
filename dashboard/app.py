@@ -167,7 +167,12 @@ def render_content(tab):
         return html.Div(dcc.Graph(id='graph-2-tabs', figure=age_figure, )),
     elif tab == 'tab-3-example':
         return html.Div(dcc.Graph(id='graph-3-tabs', figure=pct_figure, )),
-
+from random import randint
+import flask
+import os
+server = flask.Flask(__name__)
+server.secret_key = os.environ.get('secret_key', str(randint(0, 1000000)))
+app = dash.Dash(__name__, server=server)
 
 if __name__ == '__main__':
-    app.run_server()
+    app.server.run(debug=False, threaded=True)

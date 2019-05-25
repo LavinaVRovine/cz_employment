@@ -4,8 +4,11 @@ import os
 
 UNEMPLOYED_COL_NAME = "unemployment_count"
 SHEET_NAME = "NUTS3"
-DATABASE_URL = f"postgres://postgres:{os.getenv('db_password', 'epic_password')}@localhost/cz_unemployment"
-DATABASE_URL = os.environ['DATABASE_URL']
+
+if "DYNO" in os.environ:
+    DATABASE_URL = os.environ['DATABASE_URL']
+else:
+    DATABASE_URL = f"postgres://postgres:{os.getenv('db_password', 'epic_password')}@localhost/cz_unemployment"
 print(DATABASE_URL)
 # DATABASE_URL = 'sqlite:///:memory:'
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))

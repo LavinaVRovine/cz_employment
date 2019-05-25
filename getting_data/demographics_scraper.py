@@ -95,9 +95,9 @@ class DemographicsStats:
     def write_to_db(self):
         if self.data is None:
             raise Exception
-        self.data.to_sql(con=self.engine, name="demographic_statistics", if_exist="replace", index=False)
+        self.data.to_sql(con=self.engine, name="demographic_statistics", if_exists="replace", index=False)
         self.logger.info(f"Demographic statistics rewritten due to table exists:{self.table_exists} "
-                         f"or {datetime.now().year > self.max_data_year}")
+                         f"or {datetime.now().year} > {self.max_data_year}")
 
 
 if __name__ == "__main__":

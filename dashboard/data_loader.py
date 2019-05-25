@@ -8,8 +8,13 @@ engine = create_engine(DATABASE_URL)
 
 # TODO: refactor
 
+# TODO:
+def data_exists():
+    pass
+
 def load_age_data():
-    CITY_DISTRICT_MAPPING = pd.read_csv(ROOT_DIR + "\\district_city_mapping.csv")
+
+    CITY_DISTRICT_MAPPING = pd.read_sql_table(con=engine, table_name="district_city_mapping")
     CITY_DISTRICT_MAPPING.loc[CITY_DISTRICT_MAPPING["district"] == "Praha", "Obec s rozšířenou působností"] = "Praha"
 
     age_district_df = pd.read_sql_table(con=engine, table_name="age_districts")
@@ -32,9 +37,9 @@ def load_age_data():
 
     return age_district_df, age_cities_df_counts
 
-
+# TODO: kdyz neexistuje, tak raise error
 def load_totals_data():
-    CITY_DISTRICT_MAPPING = pd.read_csv(ROOT_DIR + "\\district_city_mapping.csv")
+    CITY_DISTRICT_MAPPING = pd.read_sql_table(con=engine, table_name="district_city_mapping")
     CITY_DISTRICT_MAPPING.loc[CITY_DISTRICT_MAPPING["district"] == "Praha", "Obec s rozšířenou působností"] = "Praha"
 
     total_district_df = pd.read_sql_table(con=engine, table_name="total_districts")

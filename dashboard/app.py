@@ -18,6 +18,17 @@ ideas: pridat pocty pracovnich pozict, pridat dalsi veci co mam nascrapovane
 engine = test_engine()
 
 app = dash.Dash(__name__)
+
+app.scripts.config.serve_locally = False
+app.scripts.append_script({
+    'external_url': 'https://www.googletagmanager.com/gtag/js?id=UA-126618105-2'
+})
+
+app.scripts.append_script({
+    'external_url': '/assets/gtag.js'
+})
+
+
 # needed to dynamically generate filtered graphs in Tabs, because the graph does not exists without tab being selected
 app.config['suppress_callback_exceptions'] = True
 server = app.server

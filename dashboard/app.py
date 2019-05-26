@@ -2,9 +2,6 @@ import dash
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
-import os
-
-print(f"FUUUU {os.path.dirname(os.path.abspath(__file__))}")
 
 from config import UNEMPLOYED_COL_NAME
 from dashboard.data_loader import load_totals_data, load_age_data, load_table_data
@@ -17,6 +14,7 @@ from dashboard.filters import get_region_checker, get_time_picker
 ideas: pridat pocty pracovnich pozict, pridat dalsi veci co mam nascrapovane
 """
 # TODO: date slider still sux, make footer
+# TODO: heroku problem - app has around 600MB, 512 is max
 engine = test_engine()
 
 app = dash.Dash(__name__)
@@ -103,6 +101,7 @@ layout = html.Div([
 ])
 
 app.layout = layout
+app.title = "Statistiky nezaměstnanosti v ČR"
 
 
 @app.callback(
@@ -171,9 +170,6 @@ def render_content(tab):
     elif tab == 'tab-3-example':
         return html.Div(dcc.Graph(id='graph-3-tabs', figure=pct_figure, )),
 
-#server = flask.Flask(__name__)
-#server.secret_key = os.environ.get('secret_key', str(randint(0, 1000000)))
-#app = dash.Dash(__name__, server=server)
 
 if __name__ == '__main__':
-    app.server.run(debug=False, threaded=True)
+    app.server.run(debug=False)

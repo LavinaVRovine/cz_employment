@@ -82,7 +82,7 @@ layout = html.Div([
 
             ], style={"margin-top": "15px"}),
 
-            html.Div(className="row eleven columns", children=[
+            html.Div(className="row eleven columns", style={"margin-top": "15px"} , children=[
                 html.H6("Základní statistiky (průměr zvoleného období)",
                         style={"text-align": "center", "vertical-align": "middle"}),
                 html.Div(dash_t)]

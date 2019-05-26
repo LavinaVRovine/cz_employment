@@ -141,7 +141,7 @@ def get_data_table(total_cities_for_table):
         filtering=False,
         sorting=True,
         editable=False,
-        style_as_list_view=True,
+        #style_as_list_view=True,
         pagination_mode="fe",
         pagination_settings={
             "displayed_pages": 1,

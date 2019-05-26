@@ -11,15 +11,25 @@ def main_data_getter():
     engine = test_engine()
 
     if not table_exists("district_city_mapping", engine):
-        if os.path.exists(ROOT_DIR + "district_city_mapping.csv"):
+        if os.path.exists(ROOT_DIR + "\\district_city_mapping.csv"):
             import pandas as pd
-            mappings = pd.read_csv(ROOT_DIR + "district_city_mapping.csv")
-            mappings.to_csv("district_city_mapping.csv", index=False)
+            mappings = pd.read_csv(ROOT_DIR + "\\district_city_mapping.csv")
+
             mappings.to_sql("district_city_mapping", engine, index=False)
+            # todo write log here
         else:
             from helpers import get_city_district_mapping
             mappings = get_city_district_mapping()
             mappings.to_sql("district_city_mapping", engine, index=False)
+            mappings.to_csv(ROOT_DIR + "\\district_city_mapping.csv", index=False)
+
+    # psotgres to sqlite testing
+    # import pandas as pd
+    # postgres_URL = f"postgres://postgres:{os.getenv('db_password', 'epic_password')}@localhost/cz_unemployment"
+    # sql_url = f'sqlite:///..\\unemployment_data.db'
+    # p_eng = test_engine(postgres_URL)
+    # s_eng = test_engine(sql_url)
+    # df = pd.read_sql_table("demographic_statistics", con=p_eng)
 
     demos = DemographicsStats(engine, DATA_GETTER_LOGGER)
     if demos.should_scrape():

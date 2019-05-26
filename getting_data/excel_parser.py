@@ -24,6 +24,7 @@ class ExcelParser:
     def parse_time_frame(self):
         matches = re.findall(re.compile(r"(\d+_\d+)"), self.file_path)
         if len(matches) != 1:
+            # todo vyresit at nefailuje, ale exitne
             raise ValueError
         return matches[0].split("_")
 

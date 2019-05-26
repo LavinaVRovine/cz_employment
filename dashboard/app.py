@@ -2,9 +2,9 @@ import dash
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
-from random import randint
-import flask
 import os
+
+print(f"FUUUU {os.path.dirname(os.path.abspath(__file__))}")
 
 from config import UNEMPLOYED_COL_NAME
 from dashboard.data_loader import load_totals_data, load_age_data, load_table_data

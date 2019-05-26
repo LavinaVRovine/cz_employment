@@ -4,14 +4,16 @@ import os
 
 UNEMPLOYED_COL_NAME = "unemployment_count"
 SHEET_NAME = "NUTS3"
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 if "DYNO" in os.environ:
-    DATABASE_URL = os.environ['DATABASE_URL']
+    # switched to sqlite as free postgre  can store up to 10k row only
+    # DATABASE_URL = os.environ['DATABASE_URL']
+    DATABASE_URL = f'sqlite:////app/unemployment_data.db'
 else:
-    DATABASE_URL = f"postgres://postgres:{os.getenv('db_password', 'epic_password')}@localhost/cz_unemployment"
-print(DATABASE_URL)
-# DATABASE_URL = 'sqlite:///:memory:'
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+    # DATABASE_URL = f"postgres://postgres:{os.getenv('db_password', 'epic_password')}@localhost/cz_unemployment"
+    DATABASE_URL = f'sqlite:///{ROOT_DIR}\\unemployment_data.db'
+
 # logging.basicConfig(level=logging.DEBUG)
 MY_LOGGER = logging.getLogger(__name__)
 DATA_GETTER_LOGGER = logging.getLogger(__name__)

@@ -46,12 +46,19 @@ class DemographicsStats:
         data_df["Rok"] = max_data_year + 1
         return data_df
 
+    def elections_in_progress(self, response):
+
+        if "voleb je omezen provoz" in response.text:
+            self.logger.fatal("Demo Statistics are disabled during elections, because reason")
+            raise Exception("Demo Statistics are disabled during elections, because reason")
+
     def get_demographic_statistics(self):
         url = "https://www.czso.cz/csu/czso/databaze-demografickych-udaju-za-obce-cr"
         base_url = "https://www.czso.cz"
         response = requests.get(url)
         if response.status_code != 200:
             raise ConnectionError
+        self.elections_in_progress()
         soup = BeautifulSoup(response.text, features="lxml")
 
         table = soup.find("table")

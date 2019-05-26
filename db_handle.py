@@ -6,9 +6,9 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
-def test_engine():
+def test_engine(url=DATABASE_URL):
     try:
-        eng = create_engine(DATABASE_URL)
+        eng = create_engine(url)
         eng.connect()
         return eng
     except exc.OperationalError as oe:

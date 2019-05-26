@@ -3,7 +3,7 @@ from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
 
-from config import UNEMPLOYED_COL_NAME
+from config import UNEMPLOYED_COL_NAME, UA_ID, DEBUG
 from dashboard.data_loader import load_totals_data, load_age_data, load_table_data
 from dashboard.custom_css import tab_selected_style, tabs_styles, tab_style
 from db_handle import test_engine
@@ -13,7 +13,7 @@ from dashboard.filters import get_region_checker, get_time_picker
 """
 ideas: pridat pocty pracovnich pozict, pridat dalsi veci co mam nascrapovane
 """
-# TODO: date slider still sux, make footer
+# TODO: date slider still sux
 # TODO: heroku problem - app has around 600MB, 512 is max
 engine = test_engine()
 
@@ -21,7 +21,7 @@ app = dash.Dash(__name__)
 
 app.scripts.config.serve_locally = False
 app.scripts.append_script({
-    'external_url': 'https://www.googletagmanager.com/gtag/js?id=UA-126618105-2'
+    'external_url': f'https://www.googletagmanager.com/gtag/js?id=UA-{UA_ID}'
 })
 
 app.scripts.append_script({
@@ -87,26 +87,25 @@ layout = html.Div([
                         style={"text-align": "center", "vertical-align": "middle"}),
                 html.Div(dash_t)]
                      ),
-            html.Br(),
-            html.Br(),
-            html.P(),
-            html.Hr(),
 
+        ])
+    ]),
+    html.Div(className="row", children=[
+        html.Footer(children=[
             html.Div(className="row",
-                     style={"vertical-align": "center", "text-align": "center", "padding-top": "20px"},
+                     style={"padding-top": "25px"},
                      children=[
                          html.A("Statistiky nezaměstnanosti získány z mpsv",
-                                href="https://portal.mpsv.cz/sz/stat/nz/qrt", className="six columns", ),
+                                href="https://portal.mpsv.cz/sz/stat/nz/qrt", className="six columns",
+                                style={"vertical-align": "right", "text-align": "right"}),
                          html.A("Statistiky počtu obyvatel získány z czso",
                                 href="https://www.czso.cz/csu/czso/databaze-demografickych-udaju-za-obce-cr",
-                                className="six columns", ),
+                                className="six columns", style={"vertical-align": "left", "text-align": "left"}),
                      ]),
             html.Div(children=[
-                html.Footer("Made for fun in Brno, Czechia 2019"),
-                html.Span(className="fa fa-heart fa-2x animated pulse"),
+                dcc.Markdown("[Made] (https://github.com/LavinaVRovine/cz_employment) for fun in Brno, Czechia 2019"),
                 html.A("Pavel Klammert", href="http://www.klammert.cz/")
             ], style={"vertical-align": "center", "text-align": "center"})
-
         ])
     ])
 ])
@@ -183,4 +182,4 @@ def render_content(tab):
 
 
 if __name__ == '__main__':
-    app.server.run(debug=False)
+    app.server.run(debug=DEBUG)

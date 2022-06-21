@@ -38,7 +38,7 @@ MarkupSafe==1.1.1
 matplotlib==3.0.3
 munch==2.3.2
 nbformat==4.4.0
-numpy==1.16.3
+numpy==1.22.0
 pandas==0.24.2
 parso==0.4.0
 pickleshare==0.7.5
